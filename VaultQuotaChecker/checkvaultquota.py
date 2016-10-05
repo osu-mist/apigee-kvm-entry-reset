@@ -3,8 +3,12 @@ import sys
 import smtplib
 from email.mime.text import MIMEText
 
-def sendNotificationEmail(count):
-    text = 'The Vault API has had ' + str(count) + ' quota violaitons in the past hour'
+def sendNotificationEmail(count,job_interval='hour'):
+    """
+    Sends the quota violation notification email.
+    """
+    #TODO Configure past TIME_INTERVAL and leave that to Jenkins
+    text = 'The Vault API has had ' + str(count) + ' quota violaitons in the past {interval}'.format(interval=job_interval)
     msg = MIMEText(text,'plain')
     msg['Subject'] = 'Jenkins Vault Quota Checker Notification'
     msg['From'] = 'ECS DATA Jenkins Instance'
