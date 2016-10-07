@@ -1,6 +1,7 @@
 {
 	"hostname": "https://api.example.com/",
 	"version": "v1",
+	"org":"osu",
 
 	"env_name": "test",
 	"map_name": "GeorgeLookupJson_1_QVCKVM",
