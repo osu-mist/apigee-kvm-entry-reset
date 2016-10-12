@@ -54,7 +54,7 @@ def getKVMQuotaCount(keymap_url, config_data):
     r = requests.get(keymap_url, auth=(config_data['client_id'],config_data['client_secret']))
     if r.status_code == 200:
         res = r.json()
-        val = int(res[u'value'].decode('utf-8'))
+        val = int( res[u'value'].decode('utf-8') )
     else:
         val = None
     return (r.status_code, val)
@@ -70,11 +70,12 @@ if __name__ == '__main__':
         keymap_url = buildKeyMapUrl()
 
         status, val = getKVMQuotaCount(keymap_url, config_data)
-        if status == requests.codes.ok
-            print "Quota value recieved, sending email."
+        if status == requests.codes.ok:
+            print "Quota value recieved, val: {}.",val
         else:
             print "Get request to KVM failed."
 
+        return val
     except:
         print "Please make sure placing the configuration file in the same directory and pass it as an argument!"
 	#getQuotaViolationsCount('https://api.enterprise.apigee.com/v1/organizations/osu/keyvaluemaps/GeorgeLookupJson_1_QVCKVM',)
