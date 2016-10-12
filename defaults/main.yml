@@ -2,5 +2,5 @@
 jenkins_job_path: "{{ jenkins_home }}jobs/"
 jenkins_job_name: VaultQuotaChecker
 
-repo_url: https://github.sig.oregonstate.edu/ecs-data/jenkinsVaultQuotaChecker
+repo_url: git@github.sig.oregonstate.edu:ecs-data/jenkinsVaultQuotaChecker.git
 repo_branch: develop
