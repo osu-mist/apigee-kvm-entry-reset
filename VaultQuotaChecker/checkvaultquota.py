@@ -74,8 +74,6 @@ if __name__ == '__main__':
             print val
         else:
             sys.stderr.write("Get request to KVM failed.")
-
-        return val
     except:
         print "Please make sure placing the configuration file in the same directory and pass it as an argument!"
 	#getQuotaViolationsCount('https://api.enterprise.apigee.com/v1/organizations/osu/keyvaluemaps/GeorgeLookupJson_1_QVCKVM',)
