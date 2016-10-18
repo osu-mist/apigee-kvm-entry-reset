@@ -73,7 +73,7 @@ if __name__ == '__main__':
         if status == requests.codes.ok:
             print val
         else:
-            print "Get request to KVM failed."
+            sys.stderr.write("Get request to KVM failed.")
 
         return val
     except:
