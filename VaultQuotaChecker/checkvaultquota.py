@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
         status, val = getKVMQuotaCount(keymap_url, config_data)
         if status == requests.codes.ok:
-            print "Quota value recieved, val: {}.",val
+            print val
         else:
             print "Get request to KVM failed."
 
