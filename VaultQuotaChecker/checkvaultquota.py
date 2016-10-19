@@ -67,7 +67,6 @@ if __name__ == '__main__':
         # Read configuration file in JSON format
         #Add Jenkins job string parameter for job interval
         config_data_file = open(sys.argv[1])
-        print config_data_file ,"\n"
         config_data = json.load(config_data_file)
         keymap_url = buildKeyMapUrl(config_data)
         status, val = getKVMQuotaCount(keymap_url, config_data)
