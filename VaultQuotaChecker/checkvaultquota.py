@@ -63,20 +63,18 @@ def getKVMQuotaCount(keymap_url, config_data):
     #TODO Try to trash this with invalid responses from the server
 
 if __name__ == '__main__':
-    #try:
+    try:
         # Read configuration file in JSON format
         #Add Jenkins job string parameter for job interval
         config_data_file = open(sys.argv[1])
+        print config_data_file ,"\n"
         config_data = json.load(config_data_file)
         keymap_url = buildKeyMapUrl(config_data)
-        print "KEYMAP_URL %s", keymap_url
-
         status, val = getKVMQuotaCount(keymap_url, config_data)
-        print "STATUS %s\n", status
         if status == requests.codes.ok:
             print val
         else:
             sys.stderr.write("Get request to KVM failed.")
-    #except:
-        #print "Please make sure placing the configuration file in the same directory and pass it as an argument!"
+    except:
+        print "Please make sure placing the configuration file in the same directory and pass it as an argument!"
 	#getQuotaViolationsCount('https://api.enterprise.apigee.com/v1/organizations/osu/keyvaluemaps/GeorgeLookupJson_1_QVCKVM',)
