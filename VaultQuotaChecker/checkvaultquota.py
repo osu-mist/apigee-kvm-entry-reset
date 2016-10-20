@@ -6,12 +6,11 @@ import smtplib
 def resetKVMQuotaCount(keymap_url, config_data):
     """
     Executes a post request to the KVM to reset the quota violation count to 0.
-    Returns true on request sucess
+    Returns true on request success
     """
     jsonbody = json.dumps({'name': 'QVCK_1', 'value': 0})
     r = requests.post(keymap_url, data=jsonbody, auth=(config_data['client_id'],config_data['client_secret']))
     return r.status_code == 200
-
 
 def buildKeyMapUrl(config_data):
     """
@@ -41,20 +40,17 @@ def getKVMQuotaCount(keymap_url, config_data):
         val = None
     return (r.status_code, val)
 
-    #TODO Try to trash this with invalid responses from the server
-
 if __name__ == '__main__':
     try:
-        # Read configuration file in JSON format
-        #Add Jenkins job string parameter for job interval
         config_data_file = open(sys.argv[1])
         config_data = json.load(config_data_file)
         keymap_url = buildKeyMapUrl(config_data)
+
         status, val = getKVMQuotaCount(keymap_url, config_data)
+        
         if status == requests.codes.ok:
             print val
         else:
             sys.stderr.write("Get request to KVM failed.")
     except:
         print "Please make sure placing the configuration file in the same directory and pass it as an argument!"
-	#getQuotaViolationsCount('https://api.enterprise.apigee.com/v1/organizations/osu/keyvaluemaps/GeorgeLookupJson_1_QVCKVM',)
