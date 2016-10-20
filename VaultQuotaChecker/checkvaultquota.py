@@ -8,7 +8,7 @@ def resetKVMQuotaCount(keymap_url, config_data):
     Executes a post request to the KVM to reset the quota violation count to 0.
     Returns true on request success
     """
-    jsonbody = json.dumps({'name': 'QVCK_1', 'value': 0})
+    jsonbody = json.dumps({'name': config_data['entry_name'], 'value': 0})
     r = requests.post(keymap_url, data=jsonbody, auth=(config_data['client_id'],config_data['client_secret']))
     return r.status_code == 200
 
