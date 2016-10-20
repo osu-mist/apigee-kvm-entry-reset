@@ -12,6 +12,7 @@ The python script was developed for Python 2.7.11
 ---------
 ![alt text](VaultQuotaChecker/images/jenkinssshcredexample.png "SSH Cred Example")
 1. Add Github enterprise SSH credentials.
+
 2. Add your [configuration file](VaultQuotaChecker/configuration.example.json) as a secret file binding. This will be passed to the python script via the $CONFIGJSON variable.
 
 ### Note
