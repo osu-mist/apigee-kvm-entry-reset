@@ -40,6 +40,9 @@ def getKVMQuotaCount(keymap_url, config_data):
         val = None
     return (r.status_code, val)
 
+"""
+This script makes a simple api call to Apigee's kvm api to check the number of quota violcations for a given kvm entry.
+"""
 if __name__ == '__main__':
     try:
         config_data_file = open(sys.argv[1])
