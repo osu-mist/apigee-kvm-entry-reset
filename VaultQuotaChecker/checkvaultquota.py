@@ -2,6 +2,8 @@ import requests
 import sys
 import json
 import smtplib
+from uritemplate import expand
+from uritemplate import URITemplate
 
 def resetKVMQuotaCount(keymap_url, config_data):
     """
@@ -16,8 +18,9 @@ def buildKeyMapUrl(config_data):
     """
     Formats the KVM Keymap url for us using the config data.
     """
-    s ='{hostname}/{version}/organizations/{org}/environments/{env_name}/keyvaluemaps/{map_name}/entries/{entry_name}'
-    return s.format(
+
+    t = URITemplate('https://{hostname}/{version}/organizations/{org}/environments/{env_name}/keyvaluemaps/{map_name}/entries/{entry_name}')
+    return t.expand(
         hostname    = config_data['hostname'],
         version     = config_data['version'],
         org         = config_data['org'],
