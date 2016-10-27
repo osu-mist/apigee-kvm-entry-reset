@@ -1,7 +1,7 @@
 import requests
 import sys
 import json
-import smtplib
+import logging
 from uritemplate import expand
 from uritemplate import URITemplate
 
@@ -47,15 +47,22 @@ def getKVMQuotaCount(keymap_url, config_data):
 This script makes a simple api call to Apigee's kvm api to check the number of quota violcations for a given kvm entry.
 """
 if __name__ == '__main__':
+    logging.basicConfig(filename='jobinfo.log',level=logging.INFO)
+    logging.basicConfig(filename='joberrors.log',level=logging.ERROR)
     try:
         config_data_file = open(sys.argv[1])
         config_data = json.load(config_data_file)
         keymap_url = buildKeyMapUrl(config_data)
 
         status, val = getKVMQuotaCount(keymap_url, config_data)
-        
+
         if status == requests.codes.ok:
             print val
+            if(val > 0):
+                if(resetKVMQuotaCount(keymap_url, config_data) == False):
+                    logging.error('API Call to reset KVM Quota Count failed.')
+                else:
+                    logging.info('Reset call to KVM Quota Count succeceded.')
         else:
             sys.stderr.write("Get request to KVM failed.")
     except:
