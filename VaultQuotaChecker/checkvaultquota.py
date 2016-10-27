@@ -11,6 +11,8 @@ def resetKVMQuotaCount(keymap_url, config_data):
     Returns true on request success
     """
     jsonbody = json.dumps({'name': config_data['entry_name'], 'value': 0})
+    headers = {'content-type': 'application/json'}
+
     r = requests.post(keymap_url, data=jsonbody, auth=(config_data['client_id'],config_data['client_secret']))
     return r.status_code == 200
 
