@@ -10,10 +10,11 @@ def resetKVMQuotaCount(keymap_url, config_data):
     Executes a post request to the KVM to reset the quota violation count to 0.
     Returns true on request success
     """
+    print "resetting quota kvm"
     jsonbody = json.dumps({'name': config_data['entry_name'], 'value': 0})
     headers = {'content-type': 'application/json'}
 
-    r = requests.post(keymap_url, data=jsonbody, auth=(config_data['client_id'],config_data['client_secret']))
+    r = requests.post(keymap_url, headers=headers, data=jsonbody, auth=(config_data['username'],config_data['password']))
     return r.status_code == 200
 
 def buildKeyMapUrl(config_data):
@@ -31,13 +32,13 @@ def buildKeyMapUrl(config_data):
         entry_name  = config_data['entry_name']
     )
 
-
 def getKVMQuotaCount(keymap_url, config_data):
     """
     Executes a get request to the KVM Quota count entry
     Returns status code and val as a pair for error handling purposes.
     """
-    r = requests.get(keymap_url, auth=(config_data['client_id'],config_data['client_secret']))
+    r = requests.get(keymap_url, auth=(config_data['username'],config_data['password']))
+    
     if r.status_code == 200:
         res = r.json()
         val = int( res[u'value'].decode('utf-8') )
@@ -51,15 +52,16 @@ This script makes a simple api call to Apigee's kvm api to check the number of q
 if __name__ == '__main__':
     logging.basicConfig(filename='jobinfo.log',level=logging.INFO)
     logging.basicConfig(filename='joberrors.log',level=logging.ERROR)
+
     try:
         config_data_file = open(sys.argv[1])
         config_data = json.load(config_data_file)
         keymap_url = buildKeyMapUrl(config_data)
-
+        
         status, val = getKVMQuotaCount(keymap_url, config_data)
 
         if status == requests.codes.ok:
-            print val
+            
             if(val > 0):
                 if(resetKVMQuotaCount(keymap_url, config_data) == False):
                     logging.error('API Call to reset KVM Quota Count failed.')

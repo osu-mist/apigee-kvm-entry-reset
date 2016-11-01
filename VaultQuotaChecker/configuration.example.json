@@ -7,6 +7,6 @@
 	"map_name": "GeorgeLookupJson_1_QVCKVM",
 	"entry_name": "QVCK_1",
 
-	"client_id": "secret",
-	"client_secret": "sauce"
+	"username": "secret",
+	"password": "sauce"
 }
