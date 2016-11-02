@@ -10,7 +10,6 @@ def resetKVMQuotaCount(keymap_url, config_data):
     Executes a post request to the KVM to reset the quota violation count to 0.
     Returns true on request success
     """
-    print "resetting quota kvm"
     jsonbody = json.dumps({'name': config_data['entry_name'], 'value': 0})
     headers = {'content-type': 'application/json'}
 
@@ -61,7 +60,7 @@ if __name__ == '__main__':
         status, val = getKVMQuotaCount(keymap_url, config_data)
 
         if status == requests.codes.ok:
-            
+            print val
             if(val > 0):
                 if(resetKVMQuotaCount(keymap_url, config_data) == False):
                     logging.error('API Call to reset KVM Quota Count failed.')
