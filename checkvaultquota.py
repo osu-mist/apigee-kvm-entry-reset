@@ -1,7 +1,6 @@
 import requests
 import sys
 import json
-import logging
 from uritemplate import expand
 from uritemplate import URITemplate
 
@@ -14,7 +13,14 @@ def resetKVMQuotaCount(keymap_url, config_data):
     headers = {'content-type': 'application/json'}
 
     r = requests.post(keymap_url, headers=headers, data=jsonbody, auth=(config_data['username'],config_data['password']))
-    return r.status_code == 200
+    
+    if r.status_code == 200:
+        res = r.json()
+        val = int( res[u'value'].decode('utf-8') )
+    else:
+        val = None
+
+    return val
 
 def buildKeyMapUrl(config_data):
     """
@@ -49,24 +55,19 @@ def getKVMQuotaCount(keymap_url, config_data):
 This script makes a simple api call to Apigee's kvm api to check the number of quota violcations for a given kvm entry.
 """
 if __name__ == '__main__':
-    logging.basicConfig(filename='jobinfo.log',level=logging.INFO)
-    logging.basicConfig(filename='joberrors.log',level=logging.ERROR)
+    
+    config_data_file = open(sys.argv[1])
+    config_data = json.load(config_data_file)
+    keymap_url = buildKeyMapUrl(config_data)
+    
+    get_status, quota_value = getKVMQuotaCount(keymap_url, config_data)
 
-    try:
-        config_data_file = open(sys.argv[1])
-        config_data = json.load(config_data_file)
-        keymap_url = buildKeyMapUrl(config_data)
-        
-        status, val = getKVMQuotaCount(keymap_url, config_data)
+    if get_status == requests.codes.ok:
+        if(quota_value > 0):
+            print quota_value
+            quota_value = resetKVMQuotaCount(keymap_url, config_data)
+    else:
+        print "API Call Failed"
 
-        if status == requests.codes.ok:
-            print val
-            if(val > 0):
-                if(resetKVMQuotaCount(keymap_url, config_data) == False):
-                    logging.error('API Call to reset KVM Quota Count failed.')
-                else:
-                    logging.info('Reset call to KVM Quota Count succeceded.')
-        else:
-            sys.stderr.write("Get request to KVM failed.")
-    except:
-        print "Please make sure placing the configuration file in the same directory and pass it as an argument!"
+    if (quota_value > 0):
+        print "Reset Quota Failed"       
