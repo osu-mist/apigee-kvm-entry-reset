@@ -1,4 +1,0 @@
----
-  dependencies:
-    - { role: jenkins, become: yes }
-    - { role: pip, become: yes }

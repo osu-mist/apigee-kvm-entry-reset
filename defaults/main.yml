@@ -1,6 +1,0 @@
----
-jenkins_job_path: "{{ jenkins_home }}jobs/"
-jenkins_job_name: checkvaultquota.py
-
-repo_url: https://github.com/osu-mist/vaultquotachecker.git
-repo_branch: develop
