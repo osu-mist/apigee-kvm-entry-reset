@@ -1,11 +1,11 @@
 {
-	"hostname": "api.example.com",
+	"hostname": "api.enterprise.apigee.com",
 	"version": "v1",
-	"org": "osu",
+	"org": "oregonstateuniversity",
 
 	"env_name": "test",
-	"map_name": "GeorgeLookupJson_1_QVCKVM",
-	"entry_name": "QVCK_1",
+	"map_name": "vault",
+	"entry_name": "quota_violations",
 
 	"username": "secret",
 	"password": "sauce"
