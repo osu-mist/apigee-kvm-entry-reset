@@ -46,7 +46,7 @@ def getKVMQuotaCount(keymap_url, config_data):
     
     if r.status_code == 200:
         res = r.json()
-        val = int( res[u'value'].decode('utf-8') )
+        val = float( res[u'value'].decode('utf-8') )
     else:
         val = None
     return (r.status_code, val)
